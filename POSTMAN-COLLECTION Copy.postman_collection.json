@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "ae77527b-ddc3-4492-b3fc-a86ee5dd432a",
+		"name": "POSTMAN-COLLECTION Copy",
+		"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Frontland",
+			"item": [
+				{
+					"name": "rbac",
+					"item": [
+						{
+							"name": "Create Role",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenBearer}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"test3\",\r\n    \"description\": \"ASD\",\r\n    \"permissions\": [\"potato\", \"tomato\"],\r\n    \"active\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{hostnameUsuario}}/rbac",
+									"host": [
+										"{{hostnameUsuario}}"
+									],
+									"path": [
+										"rbac"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Role",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenBearer}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{hostnameUsuario}}/rbac?pageSize=10&page=1&permissions=\"asd,vfd\"",
+									"host": [
+										"{{hostnameUsuario}}"
+									],
+									"path": [
+										"rbac"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "name",
+											"disabled": true
+										},
+										{
+											"key": "name",
+											"value": "test3",
+											"disabled": true
+										},
+										{
+											"key": "description",
+											"value": "ASD",
+											"disabled": true
+										},
+										{
+											"key": "permissions",
+											"value": "\"asd,vfd\""
+										},
+										{
+											"key": "active",
+											"value": "true",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hostnameUsuario",
+			"value": "http://localhost:3200/api"
+		},
+		{
+			"key": "hostnameUsuario",
+			"value": "https://api-nakamura.ideabox-it.com/api",
+			"disabled": true
+		},
+		{
+			"key": "merchantId",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "merchantIdAdmin",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "tokenBearer",
+			"value": "bearer rQva6rSBjvPoR5F8eoioIy3WWABgvsiRHydJ5XVgQ7kqDuU9skE_R4egKTruwfX8zyfbRWdWF_dvlkuhN3n6VcFHOnQ3ERC7tWcJvGN0aNC7hW7Qd11cXbt99mzXPD8rBF_7YPCTz4mgWCmGEOipsZkZWGc3TaJQX5_aptF8q-qRyd8rFRcPXI_5gasI_Ligp5TPeFEbAwT0fdtYQE2CALTWARcpY3toGqJRcIGKfrufP6EHakdmXYb8aa_wDpcCRhEbq9obYvKNfsvHlV0qZGMS77B3IgDOlBG-0ni-J1yC_WtrCGLq4ipIMTuxZfFcsHw91WWu0k_VSuyI3pcWc61VSAR6QlcR7BiPfbYps__ZQFl2-1Rsh7pQcw2-ZpmrfPMt8qhVbhqBIhVxW6fkQwfqO0aOMU_yoN49S0qyDnHHIm9Z2_VEJDyj8155e8LEOFCM8Ffxkh7aau2BUcFhqLOfOSM9VJV0WYtFdxhtxqvNwVoPkwsLAmcz2oqLOzKVBqXxepxMGxNEbrJQCn7V1UVT3Hk5Wlb87fO3FQ5XQOB9NEdCaT-WxK3VFFrLM2IZAICATsX4XTyzO5tyDuv-NOBzcyaFlUiUwqjWdSyQthgGO-yUbZtFag0BSOnMqUVPVVN2KiWUgoTdMsvQjXXCXzEqTisIDVdFrTI5J1Uon_KvsCimBoRVXPI4szZXoqzicMN3TSqFOFjv7neyGumfiEb8n3X96DGdWP_4j7Dc3LdkuUQQKYiaLhzpJ4prQbiXtlhDc5onAWnvljwh4z7oYnkVgHLyX-knjPdkc5PMY4n1TW5ikX9XNd3N4zZosXqGZbC3KeNHVJDy0fG1b99uIKHMyx1XRIjSPn_CyNI_PR8"
+		},
+		{
+			"key": "passwordHash",
+			"value": "c71b111da0235af228871d287379261a9df4adfe0a7b9a04039cf3afd049ec69"
+		},
+		{
+			"key": "tokenBearerAdmin",
+			"value": "bearer Gu4l-p6ozP3dP-dFkOsKliswajjjUbcz81jVT8zJsLwlc0HdH9iFjMBH0fB4112cNDQdaMUqqgSf5Q4rbeQlNv0g1Ko5tsC5pcUm0mC2A5jikmtTs7TTI98nsEf_-3P3HJuTM55i6vQrcq8FIERA_g-sX41MofLOaabqSUqcPduI9wnN8Iyz6-ySWmQjytEhi9EtTQhvmgT1JUBJEwzthssagszUDYrtOjDOY2h8N0Wl-531-wRx9GEQLPoP79vggxIHfTLr0AtxsKYZ-xnvQRawH1EV1zpA8f_GuyNGqoBA--6zIAZS7WAsxQtEmHdO6-uA9qN_HFHor1VhRQ9qUPKLLhDbzUoJbK3JkEMBoZEJXgHoXjAuwwFHKRUl-jJHBZVqV0KCYzH3INbucvgAZb4FkxQU0irq2or-h99aRYPk9XNJkroWKdMiI_spmZA3AFkiU6XlzXddjJzbF6BBxae21m1RNVwmSIH-C94ObIKHbLb4c7iNAGfnYB92NDAIlF_hWFiVf-AyotjO0kZEMzoQREanM1XG1TwsBthjXFLj65zY97qwkhuGxGuT2JaPxER-8DdGlghlwiZ-YPeP31ieilfMMOjz5xayXm_K5KikLz6fz6cQ5wSY6cPPkVQxhXsnzvUkgjC9Vh-DWQBXqXf81SOtGd6WNGMFsaxMQxPuXAUtePLo32uBVc7E2sP6GbefDmZLsmig2efIc8_cnL3zBDzR2JX7HjSCUNcUaAXJgIbPPN51UQvw7I-lFI3l"
+		},
+		{
+			"key": "passwordHashAdmin",
+			"value": "4a0fb8ca70e51c437faa74584a7315e27f5d75abca901ae2969ab8d6977cb36a"
+		},
+		{
+			"key": "password",
+			"value": "b7d24c0b8ea68c8d022a384ebbb0b65c1308c9b8c13792fa83d09e2ea5eb31ac"
+		}
+	]
+}

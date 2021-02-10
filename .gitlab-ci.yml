@@ -1,0 +1,60 @@
+stages:
+  - Build
+  - Deploy
+image: docker:latest
+variables:
+  TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+  TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
+build-dev:
+  stage: Build
+  services:
+    - docker:dind
+  tags:
+    - docker
+  only:
+    - master
+  before_script:
+    - docker info
+    - echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+  script:
+    #    - "docker build -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME-$CI_PIPELINE_ID ."
+    - "docker build -t $TAG_COMMIT -t $TAG_LATEST ."
+    - echo $CI_REGISTRY_NAME
+    - echo $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME-$CI_PIPELINE_ID
+    - docker push "$TAG_COMMIT"
+    - docker push "$TAG_LATEST"
+#deploy-dev:
+#  stage: Deploy
+#  image: docker:latest
+#  services:
+#    - docker:dind
+#  only:
+#    - master
+#  tags:
+#    - nj1
+#  script:
+#    - echo $CI_REGISTRY_NAME
+#    - echo $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME-$CI_PIPELINE_ID
+#  environment:
+#    name: staging
+#  when: manual
+deploy-dev:
+  image: alpine:latest
+  stage: Deploy
+  tags:
+    - nj
+  environment:
+    name: dev
+    url: $SERVER_IP
+  only:
+    - master
+  script:
+    - cd ~
+    - echo "$ID_RSA" >> ~/ssh
+    - chmod og= ~/ssh
+    - apk update && apk add openssh-client
+    - ssh -i ~/ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY"
+    - ssh -i ~/ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
+    - ssh -i ~/ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container stop -f nj-01-backend || true"
+    - ssh -i ~/ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f nj-01-backend || true"
+    - ssh -i ~/ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 3200:3200 -p 3210:3210 --network webproxy -e VIRTUAL_PORT=3200 -e VIRTUAL_HOST=api-nakamura.ideabox-it.com -e LETSENCRYPT_HOST=api-nakamura.ideabox-it.com --name nj-01-backend $TAG_COMMIT"
